@@ -16,6 +16,7 @@ class AlternatifController extends Controller
     public function index(): View
     {
         $alternatifs = Alternatif::all();
+
         return view('alternatif.index', compact('alternatifs'));
     }
 
@@ -33,6 +34,7 @@ class AlternatifController extends Controller
     public function store(StoreAlternatifRequest $request): RedirectResponse
     {
         Alternatif::create($request->validated());
+
         return redirect()->route('alternatif.index')->with('success', 'Alternatif berhasil ditambahkan.');
     }
 
@@ -50,6 +52,7 @@ class AlternatifController extends Controller
     public function update(UpdateAlternatifRequest $request, Alternatif $alternatif): RedirectResponse
     {
         $alternatif->update($request->validated());
+
         return redirect()->route('alternatif.index')->with('success', 'Alternatif berhasil diperbarui.');
     }
 
@@ -60,6 +63,7 @@ class AlternatifController extends Controller
     {
         // When an alternative is deleted, the related pivot data in 'penilaian' is also deleted because of the cascade on delete constraint.
         $alternatif->delete();
+
         return redirect()->route('alternatif.index')->with('success', 'Alternatif berhasil dihapus.');
     }
 }

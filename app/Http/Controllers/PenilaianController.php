@@ -37,7 +37,7 @@ class PenilaianController extends Controller
                 foreach ($kriteria_scores as $kriteria_id => $nilai) {
                     // Attach or update the pivot table
                     $alternatif->kriteria()->syncWithoutDetaching([
-                        $kriteria_id => ['nilai' => $nilai]
+                        $kriteria_id => ['nilai' => $nilai],
                     ]);
                 }
             }
