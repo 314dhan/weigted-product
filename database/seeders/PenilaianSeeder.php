@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Alternatif;
 use App\Models\Kriteria;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PenilaianSeeder extends Seeder

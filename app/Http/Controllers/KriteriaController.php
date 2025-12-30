@@ -16,6 +16,7 @@ class KriteriaController extends Controller
     public function index(): View
     {
         $kriterias = Kriteria::all();
+
         return view('kriteria.index', compact('kriterias'));
     }
 
@@ -33,6 +34,7 @@ class KriteriaController extends Controller
     public function store(StoreKriteriaRequest $request): RedirectResponse
     {
         Kriteria::create($request->validated());
+
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil ditambahkan.');
     }
 
@@ -50,6 +52,7 @@ class KriteriaController extends Controller
     public function update(UpdateKriteriaRequest $request, Kriteria $kriterium): RedirectResponse
     {
         $kriterium->update($request->validated());
+
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil diperbarui.');
     }
 
@@ -60,6 +63,7 @@ class KriteriaController extends Controller
     {
         // When a criterion is deleted, the related pivot data in 'penilaian' is also deleted because of the cascade on delete constraint.
         $kriterium->delete();
+
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil dihapus.');
     }
 }

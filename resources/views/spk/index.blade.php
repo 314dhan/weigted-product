@@ -58,7 +58,8 @@
     </table>
 
     <h2>3. Hasil Perhitungan dan Peringkat</h2>
-    <table>
+    <button id="print-pdf-button" class="btn">Print ke PDF</button>
+    <table id="hasil-perhitungan-table">
         <thead>
             <tr>
                 <th>Peringkat</th>
@@ -82,4 +83,25 @@
             @endforelse
         </tbody>
     </table>
+
 @endsection
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const printPdfButton = document.getElementById('print-pdf-button');
+        if (printPdfButton) {
+            printPdfButton.addEventListener('click', function() {
+                const element = document.getElementById('hasil-perhitungan-table');
+                const opt = {
+                    margin: 10,
+                    filename: 'hasil_perhitungan_spk.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                html2pdf().set(opt).from(element).save();
+            });
+        }
+    });
+</script>

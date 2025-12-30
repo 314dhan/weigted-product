@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
 use App\Models\Kriteria;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class SpkController extends Controller
