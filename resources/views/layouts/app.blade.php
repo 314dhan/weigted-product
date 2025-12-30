@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('images/Unsera.png') }}" type="image/png">
     <title>@yield('title', 'SPK Weighted Product')</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f4f7f6; color: #333; }
         .navbar { background-color: #2c3e50; color: #fff; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .navbar a { color: #fff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background-color 0.3s; }
         .navbar a:hover, .navbar a.active { background-color: #34495e; }
         .navbar .brand { font-size: 1.5rem; font-weight: bold; }
-        .container { background-color: #fff; margin: 2rem; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .main-content-container { background-color: #fff; margin: 2rem; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         th, td { padding: 12px 15px; border: 1px solid #ddd; text-align: left; }
@@ -39,15 +40,29 @@
     <nav class="navbar">
         <a href="{{ url('/') }}" class="brand">SPK WP</a>
         <div>
-            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
-            <a href="{{ route('spk.results') }}" class="{{ request()->routeIs('spk.results') ? 'active' : '' }}">Hasil SPK</a>
-            <a href="{{ route('penilaian.index') }}" class="{{ request()->routeIs('penilaian.*') ? 'active' : '' }}">Input Nilai</a>
-            <a href="{{ route('kriteria.index') }}" class="{{ request()->routeIs('kriteria.*') ? 'active' : '' }}">Data Kriteria</a>
-            <a href="{{ route('alternatif.index') }}" class="{{ request()->routeIs('alternatif.*') ? 'active' : '' }}">Data Alternatif</a>
+            @auth
+                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                <a href="{{ route('spk.results') }}" class="{{ request()->routeIs('spk.results') ? 'active' : '' }}">Hasil SPK</a>
+                <a href="{{ route('penilaian.index') }}" class="{{ request()->routeIs('penilaian.*') ? 'active' : '' }}">Input Nilai</a>
+                <a href="{{ route('kriteria.index') }}" class="{{ request()->routeIs('kriteria.*') ? 'active' : '' }}">Data Kriteria</a>
+                <a href="{{ route('alternatif.index') }}" class="{{ request()->routeIs('alternatif.*') ? 'active' : '' }}">Data Alternatif</a>
+                
+                <a href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none" style="display: none;">
+                    @csrf
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="{{ request()->routeIs('login') ? 'active' : '' }}">Login</a>
+                <a href="{{ route('register') }}" class="{{ request()->routeIs('register') ? 'active' : '' }}">Register</a>
+            @endauth
         </div>
     </nav>
 
-    <main class="container">
+    <main class="main-content-container">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
