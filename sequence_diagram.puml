@@ -1,0 +1,61 @@
+@startuml
+title Sequence Diagram - Menyimpan Kriteria Baru
+
+actor User
+participant Browser
+boundary "Web Routes" as Routes
+control "KriteriaController" as Controller
+control "StoreKriteriaRequest" as Request
+entity "Kriteria Model" as Model
+database Database
+
+User -> Browser : Mengisi & Submit Form Kriteria Baru (POST /kriteria)
+Browser -> Routes : Request POST /kriteria
+activate Routes
+Routes -> Controller : dispatch(StoreKriteriaRequest $request)
+activate Controller
+Controller -> Request : new StoreKriteriaRequest()
+activate Request
+Request -> Request : authorize()
+alt Authorization Granted
+    Request -> Request : rules() / validate()
+    alt Validation Succeeded
+        Request --> Controller : Return Validated Data
+        deactivate Request
+        Controller -> Model : create($validatedData)
+        activate Model
+        Model -> Database : INSERT INTO kriteria (...)
+        activate Database
+        Database --> Model : Success / New Record ID
+        deactivate Database
+        Model --> Controller : Created Kriteria Instance
+        deactivate Model
+        Controller -> Browser : Redirect to /kriteria (with success message)
+        deactivate Controller
+        deactivate Routes
+        Browser -> Routes : Request GET /kriteria
+        activate Routes
+        Routes -> Controller : index()
+        activate Controller
+        Controller -> Browser : Render Kriteria List Page
+        deactivate Controller
+        deactivate Routes
+        Browser --> User : Menampilkan Daftar Kriteria yang diperbarui
+    else Validation Failed
+        Request --> Controller : Return Validation Errors
+        deactivate Request
+        Controller -> Browser : Redirect back (with errors)
+        deactivate Controller
+        deactivate Routes
+        Browser --> User : Menampilkan Form dengan Error Validasi
+    end
+else Authorization Denied
+    Request --> Controller : Throw Authorization Exception
+    deactivate Request
+    Controller -> Browser : Redirect back (with error)
+    deactivate Controller
+    deactivate Routes
+    Browser --> User : Menampilkan Error Akses
+end
+
+@enduml

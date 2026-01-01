@@ -1,0 +1,45 @@
+@startuml
+title Database Diagram - SPK Weighted Product
+
+entity users {
+    + id: BIGINT [PK]
+    --
+    name: VARCHAR
+    username: VARCHAR [UNIQUE]
+    password: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity kriteria {
+    + id: BIGINT [PK]
+    --
+    nama_kriteria: VARCHAR
+    bobot: FLOAT
+    atribut: ENUM ('benefit', 'cost')
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity alternatif {
+    + id: BIGINT [PK]
+    --
+    nama_alternatif: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity penilaian {
+    + id: BIGINT [PK]
+    --
+    alternatif_id: BIGINT [FK]
+    kriteria_id: BIGINT [FK]
+    nilai: FLOAT
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+penilaian }|--|| alternatif : alternatif_id
+penilaian }|--|| kriteria : kriteria_id
+
+@enduml

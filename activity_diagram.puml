@@ -1,0 +1,46 @@
+@startuml
+title Activity Diagram - Manajemen Data Kriteria
+
+start
+
+:Membuka halaman "Kriteria";
+:Menampilkan daftar Kriteria yang ada;
+
+if (Pilih "Tambah Data"?) then (ya)
+    :Menampilkan form tambah Kriteria;
+    :Mengisi detail Kriteria (kode, nama, bobot, jenis);
+    :Submit form;
+    if (Data valid?) then (ya)
+        :Menyimpan data Kriteria baru ke database;
+        :Menampilkan notifikasi sukses;
+    else (tidak)
+        :Menampilkan pesan error validasi;
+    endif
+    :Kembali ke halaman daftar Kriteria;
+else (tidak)
+    if (Pilih "Edit" salah satu Kriteria?) then (ya)
+        :Menampilkan form edit dengan data Kriteria yang ada;
+        :Mengubah detail Kriteria;
+        :Submit form;
+        if (Data valid?) then (ya)
+            :Memperbarui data Kriteria di database;
+            :Menampilkan notifikasi sukses;
+        else (tidak)
+            :Menampilkan pesan error validasi;
+        endif
+        :Kembali ke halaman daftar Kriteria;
+    else if (Pilih "Hapus" salah satu Kriteria?) then (ya)
+        :Menampilkan konfirmasi hapus;
+        if (Konfirmasi "Ya"?) then (ya)
+            :Menghapus data Kriteria dari database;
+            :Menampilkan notifikasi sukses;
+        endif
+        :Kembali ke halaman daftar Kriteria;
+    endif
+endif
+
+:Menampilkan daftar Kriteria yang diperbarui;
+
+stop
+
+@enduml
