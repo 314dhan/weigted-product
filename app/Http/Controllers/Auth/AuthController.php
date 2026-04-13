@@ -64,6 +64,11 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('username', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            // Kepsek langsung diarahkan ke halaman Hasil SPK
+            if (Auth::user()->role === 'kepsek') {
+                return redirect()->route('spk.results');
+            }
+
             return redirect()->intended(route('dashboard'));
         }
 

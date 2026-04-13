@@ -41,12 +41,18 @@
         <a href="{{ url('/') }}" class="brand">SPK WP</a>
         <div>
             @auth
-                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
-                <a href="{{ route('spk.results') }}" class="{{ request()->routeIs('spk.results') ? 'active' : '' }}">Hasil SPK</a>
-                <a href="{{ route('penilaian.index') }}" class="{{ request()->routeIs('penilaian.*') ? 'active' : '' }}">Input Nilai</a>
-                <a href="{{ route('kriteria.index') }}" class="{{ request()->routeIs('kriteria.*') ? 'active' : '' }}">Data Kriteria</a>
-                <a href="{{ route('alternatif.index') }}" class="{{ request()->routeIs('alternatif.*') ? 'active' : '' }}">Data Alternatif</a>
-                
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                    <a href="{{ route('spk.results') }}" class="{{ request()->routeIs('spk.results') ? 'active' : '' }}">Hasil SPK</a>
+                    <a href="{{ route('penilaian.index') }}" class="{{ request()->routeIs('penilaian.*') ? 'active' : '' }}">Input Nilai</a>
+                    <a href="{{ route('kriteria.index') }}" class="{{ request()->routeIs('kriteria.*') ? 'active' : '' }}">Data Kriteria</a>
+                    <a href="{{ route('alternatif.index') }}" class="{{ request()->routeIs('alternatif.*') ? 'active' : '' }}">Data Alternatif</a>
+                @else
+                    {{-- Kepala Sekolah: hanya lihat hasil SPK --}}
+                    <span style="color:#ecf0f1; margin-right:1rem;">Halo, {{ auth()->user()->name }}</span>
+                    <a href="{{ route('spk.results') }}" class="{{ request()->routeIs('spk.results') ? 'active' : '' }}">Hasil SPK</a>
+                @endif
+
                 <a href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">
