@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 11 Jan 2026 pada 17.43
+-- Waktu pembuatan: 13 Apr 2026 pada 08.19
 -- Versi server: 8.0.30
 -- Versi PHP: 8.1.10
 
@@ -192,7 +192,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (4, '2025_12_29_083120_create_kriteria_table', 1),
 (5, '2025_12_29_083127_create_alternatif_table', 1),
 (6, '2025_12_29_083133_create_penilaian_table', 1),
-(7, '2025_12_30_155355_add_username_to_users_table', 2);
+(7, '2025_12_30_155355_add_username_to_users_table', 2),
+(8, '2025_12_31_000000_add_role_to_users_table', 3);
 
 -- --------------------------------------------------------
 
@@ -401,7 +402,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('vNj2rNeoFf3nUxJqaAHUCyaHLfl8NbfZTFgAwsNP', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidVFrd2o0Q3g1bVZ4ZGY1dUNmNVZtRVBvdXM4RkdXWG9aemRWR0g0ZyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjIxOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAiO3M6NToicm91dGUiO3M6OToiZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1768153236);
+('RQI8z2HkSM3cex1cg8LLiuAMT0gVaVG9wGzcLBqp', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiSER5amVRSG93dm1MeTlOcVMyTjViVjVxY0JBNXVlaFhVTWJXWnR5cSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjMzOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvc3BrLXJlc3VsdHMiO3M6NToicm91dGUiO3M6MTE6InNway5yZXN1bHRzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1776067988);
 
 -- --------------------------------------------------------
 
@@ -413,6 +414,7 @@ CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'admin',
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -425,8 +427,9 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', NULL, NULL, '$2y$12$e5V09F2GhZOJ2Qt8wv257umilOB4y4TUBmM.9pnIGd7JUilUU8WiO', NULL, '2025-12-30 08:58:57', '2025-12-30 08:58:57');
+INSERT INTO `users` (`id`, `name`, `username`, `role`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin', 'admin', NULL, NULL, '$2y$12$e5V09F2GhZOJ2Qt8wv257umilOB4y4TUBmM.9pnIGd7JUilUU8WiO', NULL, '2025-12-30 08:58:57', '2025-12-30 08:58:57'),
+(3, 'Nurul Fadilah', 'kepsek', 'kepsek', 'kepsek@smamuhcilegon.sch.id', NULL, '$2y$12$rKtjA9FXCyZogTFBOWmRHOZQGdtRvXxrZRjlYglPx3D/0UREI1ioG', NULL, '2026-04-12 21:07:33', '2026-04-12 21:07:33');
 
 --
 -- Indexes for dumped tables
@@ -543,7 +546,7 @@ ALTER TABLE `kriteria`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `penilaian`
@@ -555,7 +558,7 @@ ALTER TABLE `penilaian`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
