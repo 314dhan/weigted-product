@@ -35,6 +35,19 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    public function isGuest(): bool
+    {
+        return $this->role === 'guest';
+    }
+
+    /**
+     * Kepsek dan guest sama-sama hanya bisa lihat hasil SPK.
+     */
+    public function isViewOnly(): bool
+    {
+        return in_array($this->role, ['kepsek', 'guest']);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

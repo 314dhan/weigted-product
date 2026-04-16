@@ -48,8 +48,15 @@
                     <a href="{{ route('kriteria.index') }}" class="{{ request()->routeIs('kriteria.*') ? 'active' : '' }}">Data Kriteria</a>
                     <a href="{{ route('alternatif.index') }}" class="{{ request()->routeIs('alternatif.*') ? 'active' : '' }}">Data Alternatif</a>
                 @else
-                    {{-- Kepala Sekolah: hanya lihat hasil SPK --}}
-                    <span style="color:#ecf0f1; margin-right:1rem;">Halo, {{ auth()->user()->name }}</span>
+                    {{-- Kepsek & Guest: hanya lihat hasil SPK --}}
+                    <span style="color:#ecf0f1; margin-right:1rem;">
+                        Halo, {{ auth()->user()->name }}
+                        @if(auth()->user()->isGuest())
+                            <span style="background:#e67e22; font-size:0.75em; padding:2px 7px; border-radius:10px; margin-left:4px;">Guest</span>
+                        @elseif(auth()->user()->isKepsek())
+                            <span style="background:#27ae60; font-size:0.75em; padding:2px 7px; border-radius:10px; margin-left:4px;">Kepala Sekolah</span>
+                        @endif
+                    </span>
                     <a href="{{ route('spk.results') }}" class="{{ request()->routeIs('spk.results') ? 'active' : '' }}">Hasil SPK</a>
                 @endif
 

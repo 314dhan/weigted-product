@@ -33,14 +33,15 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'name'     => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),
+            'role'     => 'guest', // user register mandiri = guest
         ]);
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('spk.results');
     }
 
     /**
@@ -64,8 +65,8 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('username', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            // Kepsek langsung diarahkan ke halaman Hasil SPK
-            if (Auth::user()->role === 'kepsek') {
+            // Kepsek & guest hanya bisa lihat hasil SPK
+            if (in_array(Auth::user()->role, ['kepsek', 'guest'])) {
                 return redirect()->route('spk.results');
             }
 

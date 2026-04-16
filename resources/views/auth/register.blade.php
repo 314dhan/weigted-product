@@ -7,6 +7,9 @@
             <div class="card-header text-center h4">{{ __('Register') }}</div>
 
             <div class="card-body p-4">
+                <div class="alert alert-info" style="font-size:0.9em; margin-bottom:1.2rem;">
+                    📋 Akun yang dibuat melalui halaman ini akan mendapat akses <strong>Guest</strong> — hanya bisa melihat <strong>Hasil SPK & Laporan</strong>.
+                </div>
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
 
